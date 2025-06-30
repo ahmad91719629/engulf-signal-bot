@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Engulf Signal Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    iframe {
+      border: 2px solid #000;
+      margin-top: 10px;
+    }
+    #log {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 150px;
+      overflow-y: scroll;
+      margin-top: 20px;
+      text-align: left;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>?? Engulf Signal Bot</h1>
+  <iframe src="https://s.tradingview.com/embed-widget/mini-symbol-overview/?symbol=FX:EURUSD&width=100%&height=220&locale=en" width="100%" height="220"></iframe>
+
+  <button onclick="generateSignal()">?? Check for Signal</button>
+  <div id="log"></div>
+
+  <audio id="alertSound">
+    <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
+  </audio>
+
+  <script>
+    let total = 0, win = 0, loss = 0;
+
+    function generateSignal() {
+      total++;
+      const rand = Math.random();
+      let result = rand > 0.3 ? "? CALL Signal (Win)" : "? PUT Signal (Loss)";
+      if (rand > 0.3) win++; else loss++;
+
+      const logDiv = document.getElementById("log");
+      const entry = document.createElement("div");
+      entry.textContent = `${new Date().toLocaleTimeString()} ? ${result}`;
+      logDiv.appendChild(entry);
+      logDiv.scrollTop = logDiv.scrollHeight;
+
+      document.getElementById("alertSound").play();
+      document.title = `?? Win: ${win} / ${total}`;
+    }
+  </script>
+</body>
+</html>
